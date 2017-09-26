@@ -41,10 +41,6 @@ exports[`MyApplications component should be rendered correctly if apps uninstall
       version="3.0.0"
     />
   </div>
-  <Route
-    path="/myapps/:appSlug/manage"
-    render={[Function]}
-  />
 </div>
 `;
 
@@ -66,10 +62,6 @@ exports[`MyApplications component should display error from props correctly 1`] 
       This is a test error
     </p>
   </div>
-  <Route
-    path="/myapps/:appSlug/manage"
-    render={[Function]}
-  />
 </div>
 `;
 
@@ -89,10 +81,6 @@ exports[`MyApplications component should render correctly a spinner if apps is f
     loadingType="appsFetching"
     middle="true"
     size="xxlarge"
-  />
-  <Route
-    path="/myapps/:appSlug/manage"
-    render={[Function]}
   />
 </div>
 `;

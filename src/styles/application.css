@@ -1,0 +1,13 @@
+.sto-app {
+  display: flex;
+  margin: auto 1.7em;
+}
+
+.sto-app__icon {
+  margin-top: 0.67em;
+  margin-right: 1.7em;
+}
+
+.sto-app__content .coz-btn--regular {
+  margin-left: 0;
+}

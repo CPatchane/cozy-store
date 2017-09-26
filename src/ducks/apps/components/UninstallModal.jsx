@@ -18,24 +18,25 @@ export class UninstallModal extends Component {
 
   uninstallApp () {
     this.setState({ error: null })
-    const { app } = this.props
+    const { app, history } = this.props
     this.props.uninstallApp(app.slug)
     .then(() => {
-      this.gotoParent()
+      history.push('/myapps')
     })
     .catch()
   }
 
   gotoParent () {
-    const { parent, history } = this.props
-    history.push(parent)
+    const { history, match } = this.props
+    let url = match.url
+    history.push(url.substring(0, url.lastIndexOf('/')))
   }
 
   render () {
-    const { t, app, error } = this.props
-    // if app not found, return to parent
+    const { t, app, error, history } = this.props
+    // if app not found, return to my apps
     if (!app) {
-      this.gotoParent()
+      history.push('/myapps')
       return null
     }
     return (

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReactMarkdownWrapper component should be rendered correctly 1`] = `
+exports[`Unknown component should be rendered correctly 1`] = `
 <ReactMarkdown
   containerTagName="div"
   parserOptions={Object {}}
@@ -13,7 +13,7 @@ exports[`ReactMarkdownWrapper component should be rendered correctly 1`] = `
 />
 `;
 
-exports[`ReactMarkdownWrapper component should have correct Link renderer options 1`] = `
+exports[`Unknown component should have correct Link renderer options 1`] = `
 <a
   href="#"
   target="_blank"
