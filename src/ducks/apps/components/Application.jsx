@@ -10,31 +10,38 @@ import UninstallModal from './UninstallModal'
 import defaultAppIcon from '../../../assets/icons/icon-cube.svg'
 
 export class ApplicationComponent extends Component {
+  constructor (props) {
+    super(props)
+    props.fetchInstalledApps()
+  }
+
   openApp (related) {
     window.location.href = related
   }
 
   render () {
-    const { t, installedApps, isFetching, match, fetchError } = this.props
-    const app = installedApps.find(app => app.slug === match.params.appSlug) || null
+    const { t, installedApps, isFetching, fetchError } = this.props
     return (
       <div>
         {
-          !isFetching && app
-            ? <Application
-              t={t}
-              app={app}
-              openApp={this.openApp}
-            />
+          isFetching
+          ? <Spinner
+            size='xxlarge'
+            loadingType='appsFetching'
+            middle='true'
+          />
           : fetchError
             ? <p className='coz-error'>{fetchError.message}</p>
-            : <Spinner
-              size='xxlarge'
-              loadingType='appsFetching'
-              middle='true'
-            />
+            : null
         }
-        <Route path='/myapps/:appSlug/manage' render={({ match }) => {
+        <Route path='/application/:appSlug' render={({ match }) => {
+          if (isFetching) return
+          if (installedApps.length && match.params) {
+            const app = installedApps.find(app => app.slug === match.params.appSlug)
+            return <Application t={t} app={app} openApp={this.openApp} />
+          }
+        }} />
+        <Route path='/application/:appSlug/manage' render={({ match }) => {
           if (isFetching) return
           if (installedApps.length && match.params) {
             const app = installedApps.find(app => app.slug === match.params.appSlug)
@@ -72,7 +79,7 @@ const Application = ({t, app: { description, icon, installed, name, related, slu
         /> {t('app.open')}
       </button>
       <Link
-        to={`/myapps/${slug}/manage`}
+        to={`/application/${slug}/manage`}
         className='coz-btn coz-btn--danger-outline'
       >
         {t('app.uninstall')}

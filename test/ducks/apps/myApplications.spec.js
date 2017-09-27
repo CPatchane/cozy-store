@@ -59,7 +59,7 @@ describe('MyApplications component', () => {
     appItem.simulate('click')
     // history push to app modal URL
     expect(mockProps.history.push.mock.calls.length).toBe(1)
-    expect(mockProps.history.push.mock.calls[0][0]).toBe(`/myapps/${mockInstalledApps[0].slug}`)
+    expect(mockProps.history.push.mock.calls[0][0]).toBe(`/application/${mockInstalledApps[0].slug}`)
   })
 
 })

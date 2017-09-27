@@ -12,19 +12,15 @@ exports[`App component only should be mounted correctly 1`] = `
     <Switch>
       <Route
         component={[Function]}
+        path="/application"
+      />
+      <Route
+        component={[Function]}
         path="/discover"
       />
       <Route
         component={[Function]}
         path="/install"
-      />
-      <Route
-        component={[Function]}
-        path="/myapps/:appSlug/:manage"
-      />
-      <Route
-        component={[Function]}
-        path="/myapps/:appSlug"
       />
       <Route
         component={[Function]}

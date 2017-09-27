@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
 
 import { translate } from 'cozy-ui/react/I18n'
 import Spinner from 'cozy-ui/react/Spinner'
 
-import ApplicationComponent from './Application'
 import SmallAppItem from '../../components/SmallAppItem'
 
 export class MyApplications extends Component {
@@ -14,7 +12,7 @@ export class MyApplications extends Component {
   }
 
   onAppClick (appSlug) {
-    this.props.history.push(`/myapps/${appSlug}`)
+    this.props.history.push(`/application/${appSlug}`)
   }
 
   render () {
@@ -49,13 +47,6 @@ export class MyApplications extends Component {
             middle='true'
           />
         }
-        <Route path='/myapps/:appSlug' render={({ match }) => {
-          if (isFetching) return
-          if (installedApps.length && match.params) {
-            const app = installedApps.find(app => app.slug === match.params.appSlug)
-            return <ApplicationComponent error={this.props.actionError} installedApps={installedApps} app={app} match={match} />
-          }
-        }} />
       </div>
     )
   }
