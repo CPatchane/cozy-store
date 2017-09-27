@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 
 import { translate } from 'cozy-ui/react/I18n'
 import Icon from 'cozy-ui/react/Icon'
@@ -10,19 +10,13 @@ import UninstallModal from './UninstallModal'
 import defaultAppIcon from '../../../assets/icons/icon-cube.svg'
 
 export class ApplicationComponent extends Component {
-  constructor (props) {
-    super(props)
-    props.fetchInstalledApps()
-  }
-
   openApp (related) {
-    window.location = related
+    window.location.href = related
   }
 
   render () {
     const { t, installedApps, isFetching, match, fetchError } = this.props
     const app = installedApps.find(app => app.slug === match.params.appSlug) || null
-    const manage = match.params.manage || null
     return (
       <div>
         {
@@ -40,17 +34,13 @@ export class ApplicationComponent extends Component {
               middle='true'
             />
         }
-        {
-          !isFetching && app && manage
-          ? <UninstallModal
-            uninstallApp={this.props.uninstallApp}
-            parent='/myapps'
-            error={this.props.actionError}
-            app={app}
-            match={match}
-          />
-          : null
-        }
+        <Route path='/myapps/:appSlug/manage' render={({ match }) => {
+          if (isFetching) return
+          if (installedApps.length && match.params) {
+            const app = installedApps.find(app => app.slug === match.params.appSlug)
+            return <UninstallModal uninstallApp={this.props.uninstallApp} parent='/myapps' error={this.props.actionError} app={app} match={match} />
+          }
+        }} />
       </div>
     )
   }

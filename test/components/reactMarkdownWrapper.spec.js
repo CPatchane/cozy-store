@@ -7,7 +7,7 @@ import { shallow } from 'enzyme'
 
 import ReactMarkdownWrapper, { reactMarkdownRendererOptions } from '../../src/ducks/components/ReactMarkdownWrapper'
 
-describe('Unknown component', () => {
+describe('ReactMarkdownWrapper component', () => {
   it('should be rendered correctly', () => {
     const component = shallow(
       <ReactMarkdownWrapper source='Test [link]() __strong__' />
