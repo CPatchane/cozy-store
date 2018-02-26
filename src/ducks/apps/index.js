@@ -257,6 +257,8 @@ export function fetchInstalledApps () {
         .fetchJSON('GET', '/konnectors/')
       installedKonnectors = installedKonnectors.map(k => {
         // add `konnector-` if missing to match with the registry
+        // FIXME force adding type for konnector
+        k.attributes.type = 'konnector'
         if (!k.attributes.slug.match(/^konnector-.*/)) {
           k.attributes.slug = `konnector-${k.attributes.slug}`
         }
