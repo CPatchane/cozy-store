@@ -16,6 +16,10 @@ exports[`AppsSection component should be rendered correctly with apps list, subt
           "value": "webapps",
         },
         Object {
+          "label": "Services",
+          "value": "konnectors",
+        },
+        Object {
           "label": "Cozy",
           "value": "cozy",
         },
@@ -26,10 +30,6 @@ exports[`AppsSection component should be rendered correctly with apps list, subt
         Object {
           "label": "Partners",
           "value": "partners",
-        },
-        Object {
-          "label": "Services",
-          "value": "konnectors",
         },
         Object {
           "label": "Telecom",

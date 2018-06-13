@@ -26,6 +26,10 @@ const _sortAlphabetically = (list, t) => {
       (b === 'others' && -1) ||
       (a === 'all' && -1) ||
       (b === 'all' && 1) ||
+      (a === 'webapps' && -1) ||
+      (b === 'webapps' && 1) ||
+      (a === 'konnectors' && -1) ||
+      (b === 'konnectors' && 1) ||
       t(`app_categories.${a}`) > t(`app_categories.${b}`)
     )
   })
