@@ -121,6 +121,8 @@
       "install": "Install",
       "uninstall": "Uninstall"
     },
+    "maintenance": "What happens?",
+    "interrupted": "Service interrupted",
     "description": "Description",
     "changes": "What's New?",
     "infos": {
@@ -152,7 +154,8 @@
 
   "app_item": {
     "by": "By",
-    "installed": "Installed"
+    "installed": "Installed",
+    "maintenance": "In maintenance"
   },
 
   "app_categories": {
