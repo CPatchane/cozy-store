@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { translate } from 'cozy-ui/react/I18n'
-import Alerter from 'cozy-ui/react/Alerter'
 
 import AppRoute from './AppRoute'
 import ChannelRoute from './ChannelRoute'
@@ -10,8 +9,6 @@ import PermissionsRoute from './PermissionsRoute'
 import ConfigureRoute from './ConfigureRoute'
 import InstallRoute from './InstallRoute'
 import UninstallRoute from './UninstallRoute'
-
-import { APP_TYPE } from 'ducks/apps'
 
 export class ApplicationRouting extends Component {
   constructor(props) {
@@ -24,32 +21,6 @@ export class ApplicationRouting extends Component {
   componentWillReceiveProps(nextProps) {
     // don't react on error
     if (nextProps.actionError) return
-    // on install success
-    if (this.props.isInstalling && !nextProps.isInstalling) {
-      const { location, parent, t } = this.props
-      const pathRegex = new RegExp(`^/${parent}/([^/]*)/.*`)
-      const matches = location.pathname.match(pathRegex)
-      if (!matches || matches.length < 1) return this.redirectTo(`/${parent}/`)
-      const app = this.getAppFromMatchOrSlug(null, matches[1])
-      if (app.type === APP_TYPE.KONNECTOR) {
-        return this.redirectTo(`/${parent}/${app.slug}/configure`)
-      } else {
-        Alerter.success(t('app_modal.install.message.install_success'), {
-          duration: 3000
-        })
-        return this.redirectTo(`/${parent}/${app.slug}`)
-      }
-    } else if (this.props.isUninstalling && !nextProps.isUninstalling) {
-      const { location, parent, t } = this.props
-      const pathRegex = new RegExp(`^/${parent}/([^/]*)/.*`)
-      const matches = location.pathname.match(pathRegex)
-      if (!matches || matches.length < 1) return this.redirectTo(`/${parent}/`)
-      const app = this.getAppFromMatchOrSlug(null, matches[1])
-      Alerter.success(t('app_modal.uninstall.message.success'), {
-        duration: 3000
-      })
-      return this.redirectTo(`/${parent}/${app.slug}`)
-    }
   }
 
   getAppFromMatchOrSlug = (match, slug) => {
@@ -106,7 +77,6 @@ export class ApplicationRouting extends Component {
           isFetching={isFetching}
           isInstalling={isInstalling}
           parent={parent}
-          redirectTo={this.redirectTo}
         />
         <UninstallRoute
           actionError={actionError}
@@ -114,7 +84,6 @@ export class ApplicationRouting extends Component {
           isFetching={isFetching}
           isUninstalling={isUninstalling}
           parent={parent}
-          redirectTo={this.redirectTo}
           uninstallApp={uninstallApp}
         />
         <PermissionsRoute

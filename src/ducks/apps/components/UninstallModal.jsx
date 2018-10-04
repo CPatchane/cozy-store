@@ -5,6 +5,7 @@ import { withRouter } from 'react-router'
 
 import { translate } from 'cozy-ui/react/I18n'
 import Modal, { ModalContent } from 'cozy-ui/react/Modal'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import ReactMarkdownWrapper from '../../components/ReactMarkdownWrapper'
 
@@ -14,6 +15,22 @@ export class UninstallModal extends Component {
 
     this.gotoParent = this.gotoParent.bind(this)
     this.uninstallApp = this.uninstallApp.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { app } = nextProps
+    if (!app) {
+      return this.gotoParent()
+    }
+    if (this.props.isUninstalling && !nextProps.isUninstalling) {
+      const { parent, t, history } = this.props
+      Alerter.success(t('app_modal.uninstall.message.success'), {
+        duration: 3000
+      })
+      return history.replace(`/${parent}/${app.slug}`)
+    } else if (!app.installed || !app.uninstallable) {
+      return this.gotoParent()
+    }
   }
 
   uninstallApp() {
@@ -34,8 +51,7 @@ export class UninstallModal extends Component {
   render() {
     const { t, app, uninstallError, isUninstalling } = this.props
     // if app not found, return to parent
-    if (!app) {
-      this.gotoParent()
+    if (!app || !app.installed || !app.uninstallable) {
       return null
     }
     return (

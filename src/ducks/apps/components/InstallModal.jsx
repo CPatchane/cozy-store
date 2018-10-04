@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 
 import Modal from 'cozy-ui/react/Modal'
+import Alerter from 'cozy-ui/react/Alerter'
 
 import AppInstallation from './AppInstallation'
 import getChannel from 'lib/getChannelFromSource'
+
+import { APP_TYPE } from 'ducks/apps'
 
 export class InstallModal extends Component {
   constructor(props) {
@@ -18,7 +21,21 @@ export class InstallModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.app) this.gotoParent()
+    const { app } = nextProps
+    if (!app) return this.gotoParent()
+    if (this.props.isInstalling && !nextProps.isInstalling) {
+      const { parent, t, history } = nextProps
+      if (app.type === APP_TYPE.KONNECTOR) {
+        return history.replace(`${parent}/${app.slug}/configure`)
+      } else {
+        Alerter.success(t('app_modal.install.message.install_success'), {
+          duration: 3000
+        })
+        return history.replace(`${parent}/${app.slug}`)
+      }
+    } else if (app.installed && !app.availableVersion) {
+      return this.gotoParent()
+    }
   }
 
   async gotoParent() {
@@ -41,7 +58,9 @@ export class InstallModal extends Component {
   render() {
     const { app, installApp, isInstalling, channel, isAppFetching } = this.props
     const { isCanceling } = this.state
-    if (!app) return null
+    if (!app || (app.installed && !app.availableVersion)) {
+      return null
+    }
     return (
       <div className="sto-modal--install">
         <Modal dismissAction={this.gotoParent} mobileFullscreen>
